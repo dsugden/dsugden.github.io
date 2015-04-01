@@ -19,10 +19,17 @@ Applications that need to be resilient and responsive under load need to scale o
 
 Distributed apps need to be deployed, and upgraded. They have hardware requirements. They have dependencies and need to be able to communicate within the cluster.
 
+It is common to develop distributed applications locally, and manage cloud deployment and configuration management later on, and sometimes at great cost. 
 
 
+####How does conductr help Ops
+
+ConductR enables the "elastic" part of the Reactive Manifesto. It allows Ops to scale up or down according to load without any service interruption. We will explore how this looks in an upcoming post here, stay tuned. 
 
 
+####How does conductr help Devs
+
+As a developer, I'm interested in coding for the cloud right up front. I'm also not interested in having to know ansible/chef/puppet etc. or manually deploying my app to AWS. I want to be able to stage my app and ensure correctness and performance as easily as possible. This is the conductR promise. Lets see how that looks.
 
 
 
