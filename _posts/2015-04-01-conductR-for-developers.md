@@ -187,19 +187,23 @@ In order to facilitate this two actions are required by the developer:
 The **akka-remote** attribute must be specified as above.
 
 If you don't care about the port:
+
 ```scala
  BundleKeys.endpoints := Map("akka-remote" -> Endpoint("tcp", 0, Set.empty))
 ```
 
 And, the very first call in your boot code must be :
+
 ```scala
 ClusterProperties.initialize
 ```
 
-This results in:
+This results in: 
+
 ```
  akka.cluster.seed-nodes = ["akka.tcp://SomeAkkaClusterSystem@127.0.0.1:8089"]
 ```
+
 from your **application.conf** getting rewritten in sys.props to the appropriate cloud IP, eg:
 
 ```
