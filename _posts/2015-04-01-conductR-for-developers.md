@@ -13,14 +13,13 @@ There is more to it than that, and it's cool tech. Go read the [white paper](htt
 
 Applications that need to be resilient and responsive under load need to scale out. Akka cluster, play/spray/akka-http services are commonly distributed across vms. 
 
-####What is difficult about managing apps in a cluster?
+####Whats the big deal with managing apps in a cluster?
 
-Distributed apps need to be deployed and upgraded. They have hardware requirements. They have dependencies and need to be able to communicate within the cluster.
+Distributed apps need to be deployed and upgraded. They have hardware requirements. They have dependencies and need to be able to communicate within the cluster. These apps must be configured with network addresses/ports.
 
 It is common to develop distributed applications locally, and manage cloud deployment and configuration management later on at great cost. 
 
 When these things go wrong or take too long, it costs. $$$.
-
 
 ####How does conductr help Ops
 
@@ -29,13 +28,17 @@ ConductR enables the "elastic" part of the Reactive Manifesto. It allows Ops to 
 
 ####How does conductr help Devs
 
-As a developer, I'm interested in coding for the cloud right up front. I'm also not interested in having to know ansible/chef/puppet etc. or manually deploying my app in some special order N times to AWS nodes. I want to be able to stage my app in the cloud to ensure correctness and performance as quickly as possible. This is the conductR promise. Lets see how that looks.
+As a developer, I want to be able to develop my distributed apps both **locally** and **staged in a cloud**, without juggling all the configuration that goes along with that.
+
+I want an easy way to resolve the URLs if any dependencies I may have on other processes in the cluster.
+
+This is the conductR promise. Lets see how that looks.
 
 ####What's the stuff in ConductR
 
-You must start with a collection of vms that can speak to each other. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes. 
+Start with a collection of vms that can speak to each other. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes. 
 
-ConductR requires:
+ConductR does require on each node:
 * Debian based system (recommended: Ubuntu 14.04 LTS)
 * Oracle Java Runtime Environment 8 (JRE 8)
 * Python 3.4 (supplied with Ubuntu 14.04)
@@ -159,7 +162,84 @@ If you need these env properties passed in to your app's main as args, use the *
 BundleKeys.startCommand += "-Dhttp.address=$SINGLEMICRO_BIND_IP -Dhttp.port=$SINGLEMICRO_BIND_PORT"
 ```
 
-Voila!  Now, determining exactly which IP address is *no longer a developer's configuration problem*. That problem is now handled by OPs or ConductR itself.
+Voila!  Now, determining exactly which IP address is *no longer a developer's configuration problem*. That problem is now handled by OPs or ConductR itself. ConductR will know this information at runtime, and will pass it along.
+
+
+###What about Akka Cluster seed nodes? 
+
+ConductR handles akka clusters in the following way:
+
+For any bundles that wish to join the same cluster, this aggregation happend with the "system" attribute:
+
+```scala
+BundleKeys.system := "SomeAkkaClusterSystem"
+```
+
+For Bundles sharing the same **system** attribute and intersecting **Endpoints**, ConductR guarantees that only one
+will be starting at any given time.
+
+This removes the need to specify seed nodes in configuration: the *first* bundle that is run designates it's containing node as the defacto seed. All other subsequent nodes that are started will be passed the IP of this first **seed** node.
+
+In order to facilitate this two actions are required by the developer:
+```scala
+ BundleKeys.endpoints := Map("akka-remote" -> Endpoint("tcp", 8084, Set.empty))
+```
+The **akka-remote** attribute must be specified as above.
+
+If you don't care about the port:
+```scala
+ BundleKeys.endpoints := Map("akka-remote" -> Endpoint("tcp", 0, Set.empty))
+```
+
+And, the very first call in your boot code must be :
+```scala
+ClusterProperties.initialize
+```
+
+This results in:
+```
+ akka.cluster.seed-nodes = ["akka.tcp://SomeAkkaClusterSystem@127.0.0.1:8089"]
+```
+from your **application.conf** getting rewritten in sys.props to the appropriate cloud IP, eg:
+
+```
+ akka.cluster.seed-nodes = ["akka.tcp://SomeAkkaClusterSystem@10.0.1.60:8089"]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
