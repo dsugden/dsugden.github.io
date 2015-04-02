@@ -50,7 +50,7 @@ Each Bundle can contain one or more **Components**, typically just one. This rep
 
 When you package your Application, a ZIP file will be created for each bundle, containing a manifest.
 
-Here is an example of bundle configuration in build.sbt:
+Here is an example of bundle configuration with **one** Component:
 
 ```scala
 lazy val singlemicro = (project in file("singlemicro"))
@@ -109,6 +109,70 @@ This repo is an SBT Project with four subprojects:
 ⋅⋅* Simple Play app with a dependency on Single Microservice
 
 I've chosen subprojects to make this blog post easier, but, in the wild, it would also make sense to structure your Bundle as a single SBT project.
+
+
+###Configuration
+
+One of the painful parts of writing clustered apps that can also be run (as they are developed) locally, is managing this dual configuration.
+
+For example, akka endpoints:
+
+```
+akka.remote {
+    netty.tcp {
+      hostname = "127.0.0.1"
+      port = 8089
+    }
+  }
+```
+
+Now, you are deploying this akka app to the cloud, and this file must be tokenized for some Ops script to supply the actual IPs and ports.
+
+ConductR address this with it's **Endpoint** configuration declaration:
+
+```scala
+BundleKeys.endpoints := Map("singlemicro" -> Endpoint("http", 8096, Set(URI("http:/singlemicroservice"))))
+```
+
+When this bundle is run by ConductR, two system env properties are created called **SINGLEMICRO_BIND_IP** and **SINGLEMICRO_BIND_PORT**.
+
+These are available to your app, both in application.conf:
+
+```
+singlemicro {
+  ip = "127.0.0.1"
+  ip = ${?SINGLEMICRO_BIND_IP}
+  port = 8096
+  port = ${?SINGLEMICRO_BIND_PORT}
+}
+```
+
+and programatically:
+
+```scala
+sys.env.get("SINGLEMICRO_BIND_IP")
+```
+
+If you need these env properties passed in to your app's main as args, use the **startCommand** attribute
+
+```scala
+BundleKeys.startCommand += "-Dhttp.address=$SINGLEMICRO_BIND_IP -Dhttp.port=$SINGLEMICRO_BIND_PORT"
+```
+
+Voila!  Now, determining exactly which IP address is *no longer a developer's configuration problem*. That problem is now handled by OPs or ConductR itself.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
