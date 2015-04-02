@@ -31,3 +31,81 @@ ConductR enables the "elastic" part of the Reactive Manifesto. It allows Ops to 
 
 As a developer, I'm interested in coding for the cloud right up front. I'm also not interested in having to know ansible/chef/puppet etc. or manually deploying my app in some special order N times to AWS nodes. I want to be able to stage my app in the cloud to ensure correctness and performance as quickly as possible. This is the conductR promise. Lets see how that looks.
 
+####What's the stuff in ConductR
+
+You must start with a collection of vms that can speak to each other. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes. 
+
+Then you will install Conductr on each of these nodes. Conductr is itself an akka cluster, so you must specify a ConductR seed. As part of the installation, you will be putting a proxy on each node. More on why later. Finally, you can install a CLI on one or more of the nodes in your ConductR cluster. Now you are ready for the fun stuff.
+
+
+An **Application** in ConductR is a collection of one or more **Bundles**. The developer decides what bundles make up an Application, and then aggregates them with a configuration attribute ("system").
+
+Each Bundle can contain one or more **Components**, typically just one. This represents a process in ConductR's lifecycle management terms.
+
+When you package your Application, a ZIP file will be created for each bundle, containing a manifest.
+
+Here is an example of bundle configuration in build.sbt:
+
+```scala
+lazy val singlemicro = (project in file("singlemicro"))
+      .enablePlugins(JavaAppPackaging,SbtTypesafeConductR)
+      .settings(
+        name := "singlemicro",
+        version  := "1.0.0",
+        BundleKeys.nrOfCpus := 1.0,
+        BundleKeys.memory := 64.MiB,
+        BundleKeys.diskSpace := 5.MB,
+        BundleKeys.endpoints := Map("singlemicro" -> Endpoint("http", 8096, Set(URI("http:/singlemicro")))))
+```
+This will result in the following **bundle.conf** manifest that will be included in your .zip artifact:
+
+
+```hocon
+version    = "1.0.0"
+name       = "singlemicro"
+system     = "singlemicro-1.0.0"
+nrOfCpus   = 1.0
+memory     = 67108864
+diskSpace  = 5000000
+roles      = []
+components = {
+  "singlemicro-1.0.0" = {
+    description      = "singlemicro"
+    file-system-type = "universal"
+    start-command    = ["singlemicro-1.0.0/bin/singlemicro", "-J-Xms67108864", "-J-Xmx67108864"]
+    endpoints        = {
+      "singlemicro" = {
+        protocol  = "http"
+        bind-port = 8096
+        services  = ["http:/singlemicro"]
+      }
+    }
+  }
+}
+```
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
