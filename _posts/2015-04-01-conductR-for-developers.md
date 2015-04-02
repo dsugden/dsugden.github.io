@@ -60,7 +60,7 @@ lazy val singlemicro = (project in file("singlemicro"))
 This will result in the following **bundle.conf** manifest that will be included in your .zip artifact:
 
 
-```hocon
+```
 version    = "1.0.0"
 name       = "singlemicro"
 system     = "singlemicro-1.0.0"
