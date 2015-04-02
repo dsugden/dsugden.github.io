@@ -35,8 +35,14 @@ As a developer, I'm interested in coding for the cloud right up front. I'm also 
 
 You must start with a collection of vms that can speak to each other. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes. 
 
-Then you will install Conductr on each of these nodes. Conductr is itself an akka cluster, so you must specify a ConductR seed. As part of the installation, you will be putting a proxy on each node. More on why later. Finally, you can install a CLI on one or more of the nodes in your ConductR cluster. Now you are ready for the fun stuff.
+ConductR requires:
+* Debian based system (recommended: Ubuntu 14.04 LTS)
+* Oracle Java Runtime Environment 8 (JRE 8)
+* Python 3.4 (supplied with Ubuntu 14.04)
 
+Then you will install Conductr and a proxy (more on why later) and on each of these nodes.
+
+Finally you will install a CLI on one or more, to admin it.
 
 An **Application** in ConductR is a collection of one or more **Bundles**. The developer decides what bundles make up an Application, and then aggregates them with a configuration attribute ("system").
 
@@ -55,7 +61,8 @@ lazy val singlemicro = (project in file("singlemicro"))
         BundleKeys.nrOfCpus := 1.0,
         BundleKeys.memory := 64.MiB,
         BundleKeys.diskSpace := 5.MB,
-        BundleKeys.endpoints := Map("singlemicro" -> Endpoint("http", 8096, Set(URI("http:/singlemicro")))))
+        BundleKeys.endpoints := Map(
+        "singlemicro" -> Endpoint("http", 8096, Set(URI("http:/singlemicro")))))
 ```
 This will result in the following **bundle.conf** manifest that will be included in your .zip artifact:
 
@@ -83,6 +90,27 @@ components = {
   }
 }
 ```
+
+So lets take a look at how a developer would get started building Conductr Bundles.
+
+You'll need the [ConductR SBT plugin](https://github.com/sbt/sbt-typesafe-conductr) to get going.
+
+To help you out, I've create a repo with 4 different examples of using ConductR: https://github.com/dsugden/conductrR-examples
+
+This repo is an SBT Project with four subprojects:
+ 
+1. Single MicroService
+⋅⋅* No Dependency, Stateless microservice
+2. Akka Cluster Front
+⋅⋅* Belongs to an akka cluster, with an additional http component. Delegates work to Akka Cluster Back Nodes
+3. Akka Cluster Back
+⋅⋅* Belongs to an akka cluster, does work for Akka Cluster Front Nodes  
+4. Play Project with dependency
+⋅⋅* Simple Play app with a dependency on Single Microservice
+
+I've chosen subprojects to make this blog post easier, but, in the wild, it would also make sense to structure your Bundle as a single SBT project.
+
+
 
         
 
