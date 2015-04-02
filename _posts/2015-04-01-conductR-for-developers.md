@@ -211,6 +211,44 @@ from your **application.conf** getting rewritten in sys.props to the appropriate
 ```
 
 
+##sbt-typesafe-conductr
+
+IMO, one of the most outstanding features of the plugin is the ability to deploy and manage an app from an sbt console.
+
+eg.
+
+```
+$sbt
+$project singlemicro
+```
+
+Now we need to tell the plugin where ConductR is living:
+
+```
+conductr:controlServer 192.168.59.103:9005
+```
+
+Once this is done, you can build a distribution, load it up to ConductR cluster, run , stop and unload.
+
+```
+bundle:dist
+loadBundle < space and tab will give you the most recent bundle>
+startBundle <bundleId>
+...
+```
+
+This is meant for staging probably not something you'll be doing it production, and it beats scp'ing , ssh'ing etc.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
