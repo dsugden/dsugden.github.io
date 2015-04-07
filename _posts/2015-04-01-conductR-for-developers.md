@@ -23,14 +23,13 @@ When these things go wrong or take too long, it costs. $$$.
 
 ####How does conductr help Ops
 
-ConductR enables the "elastic" part of the Reactive Manifesto. It allows Ops to scale up or down according to load without any service interruption. We will explore how this looks in an upcoming post here, stay tuned. 
-
+ConductR enables the "elastic" part of the Reactive Manifesto. It allows Ops to scale up or down according to load without any service interruption. We will explore how this looks.
 
 ####How does conductr help Devs
 
-As a developer, I want to be able to develop my distributed apps both **locally** and **staged in a cloud**, without juggling all the configuration that goes along with that.
+As a developer, I want to be able to develop my distributed apps both **locally** and **staged in a cloud**. In an akka cluster, the deploy order matters (seed nodes). Managing the configuration for clustered apps is not trivial. Nor is managing dependencies in apps distributed for scale, ie: load balancing clusters.
 
-I want an easy way to resolve the URLs if any dependencies I may have on other processes in the cluster.
+I also want an easy way to resolve the URLs if any dependencies I may have on other processes in the cluster.
 
 This is the conductR promise. Lets see how that looks.
 
