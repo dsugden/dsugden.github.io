@@ -231,8 +231,8 @@ Once this is done, you can build a distribution, load it up to ConductR cluster,
 
 ```
 bundle:dist
-loadBundle < space and tab will give you the most recent bundle>
-startBundle <bundleId>
+conductr:load < space and tab will give you the most recent bundle>
+conductr:start <bundleId>
 ...
 ```
 
