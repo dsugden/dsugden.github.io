@@ -64,15 +64,15 @@ To help you out, I've create a repo with 4 different examples of using ConductR:
 The repo contains a Vagrantfile to bring up a 4 node ConductR cluster. Read the repo instructions.
 
 This repo is an SBT Project with four subprojects:
- 
-1. Single MicroService
-⋅⋅* No Dependency, Stateless microservice
-2. Akka Cluster Front
-⋅⋅* Belongs to an akka cluster, with an additional http component. Delegates work to Akka Cluster Back Nodes
-3. Akka Cluster Back
-⋅⋅* Belongs to an akka cluster, does work for Akka Cluster Front Nodes  
-4. Play Project with dependency
-⋅⋅* Simple Play app with a dependency on Single Microservice
+
+1. Single MicroService.
+⋅⋅* No Dependency, Stateless microservice.
+2. Akka Cluster Front.
+⋅⋅* Belongs to an akka cluster, with an additional http component. Delegates work to Akka Cluster Back Nodes.
+3. Akka Cluster Back.
+⋅⋅* Belongs to an akka cluster, does work for Akka Cluster Front Nodes.
+4. Play Project with dependency.
+⋅⋅* Simple Play app with a dependency on Single Microservice.
 
 I've chosen to use subprojects here, it would also make sense to structure your Bundle as a single SBT project.
 
