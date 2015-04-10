@@ -9,7 +9,7 @@ Put simply, ConductR is a tool that enables devs and ops roles to manage distrib
 
 There is more to it than that, and it's cool tech. Go read the [white paper](http://info.typesafe.com/COLL-20XX-ConductR-WP_LP.html?lst=WS&lsd=COLL-20XX-ConductR-WP&_ga=1.64711343.1443869017.1408561680), its worth your time.
 
-####Distrubuted Applications?
+###Distrubuted Applications?
 
 Applications that need to be resilient and responsive under load need to scale out. Akka cluster, play/spray/akka-http services are commonly distributed across vms. Ops requirements are different, and obviously more complex with distributed apps.
 
@@ -19,7 +19,7 @@ Existing tools like ansible, chef, puppet and salt are helpful, Conductr does no
 
 ConductR enables the "elastic" part of the Reactive Manifesto. It allows Ops to scale up or down according to load without any service interruption. We will explore how this looks.
 
-####How does ConductR help Devs
+###How does ConductR help Devs
 
 As a developer, I want to be able to develop my distributed apps both **locally** and **staged in a cloud**. For example, in an akka cluster, the deploy order matters (seed nodes). Managing the configuration for clustered apps is not trivial. Nor is managing dependencies in apps distributed for scale, ie: load balancing clusters.
 
@@ -27,7 +27,7 @@ I also want an easy way to resolve the URLs if any dependencies I may have on ot
 
 This is the conductR promise. Lets see how that looks.
 
-####What's the stuff in ConductR
+###What's the stuff in ConductR
 
 Start with a collection of vms in the same network. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes. 
 
