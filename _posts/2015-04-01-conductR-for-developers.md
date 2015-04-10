@@ -59,7 +59,7 @@ So lets take a look at how a developer would get started building Conductr Bundl
 
 You'll need the [ConductR SBT plugin](https://github.com/sbt/sbt-typesafe-conductr) to get going.
 
-To help you out, I've create a repo with 4 different examples of using ConductR: https://github.com/dsugden/conductrR-examples
+To help you out, I've create a repo with 4 different examples of using ConductR: [conductrR-examples](https://github.com/dsugden/conductrR-examples)
 
 The repo contains a Vagrantfile to bring up a 4 node ConductR cluster. Read the repo instructions.
 
