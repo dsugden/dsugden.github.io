@@ -171,8 +171,12 @@ To see what apps are running in my cluster:
 
 Lets start with an empty cluster. The only app running is the one serving up this site.
 
-![My helpful screenshot](https://dsugden.github.io/images/conductr/vstart.png)
+(https://dsugden.github.io/images/conductr/vstart.png)
 
+
+After deploying from the sbt-plugin, and starting on 2 nodes we immediately get:
+
+(https://dsugden.github.io/images/conductr/vsingle.png)
 
 
 
