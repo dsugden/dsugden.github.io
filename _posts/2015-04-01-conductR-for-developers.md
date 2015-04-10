@@ -48,18 +48,8 @@ When you package your Application, a ZIP file will be created for each bundle, c
 
 Here is an example of bundle configuration with **one** Component:
 
-```scala
-lazy val singlemicro = (project in file("singlemicro"))
-      .enablePlugins(JavaAppPackaging,SbtTypesafeConductR)
-      .settings(
-        name := "singlemicro",
-        version  := "1.0.0",
-        BundleKeys.nrOfCpus := 1.0,
-        BundleKeys.memory := 64.MiB,
-        BundleKeys.diskSpace := 5.MB,
-        BundleKeys.endpoints := Map(
-        "singlemicro" -> Endpoint("http", 8096, Set(URI("http:/singlemicro")))))
-```
+<script src="https://gist.github.com/dsugden/af50f5bcd7eb0398d657.js"></script>
+
 This will result in the following **bundle.conf** manifest that will be included in your .zip artifact:
 
 
