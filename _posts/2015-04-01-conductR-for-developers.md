@@ -147,29 +147,7 @@ from your **application.conf** getting rewritten in sys.props to the appropriate
 
 IMO, one of the most outstanding features of the plugin is the ability to deploy and manage an app from an sbt console.
 
-eg.
-
-```
-$sbt
-$project singlemicro
-```
-
-Now we need to tell the plugin where ConductR is living:
-
-```
-conductr controlServer 192.168.59.103:9005
-```
-
-Once this is done, you can build a distribution, load it up to ConductR cluster, run , stop and unload.
-
-```
-bundle:dist
-conductr load <space and tab will give you the most recent bundle>
-conductr start <space and tab will give you the most recently loaded bundle>
-conductr stop 
-conductr unload 
-...
-```
+<script src="https://gist.github.com/dsugden/3c82cce3f36c156e3d1a.js"></script>
 
 This is meant for staging probably not something you'll be doing it production, and it beats scp'ing , ssh'ing etc.
 
@@ -185,6 +163,10 @@ The console is served by a bundle called **Visualizer** that ships with ConductR
 Which brings us to **very useful** ConductR CLI.
 
 This is something I chose to only install on one of my ConductR nodes, as you only need to interact with one node to be interacting with the whole cluster.
+
+To see what apps are running in my cluster:
+
+<script src="https://gist.github.com/dsugden/40d12328e3f5c5288501.js"></script>
 
 
 
