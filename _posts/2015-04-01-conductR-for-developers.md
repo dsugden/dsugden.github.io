@@ -9,7 +9,7 @@ Put simply, ConductR is a tool that enables devs and ops roles to manage distrib
 
 There is more to it than that, and it's cool tech. Go read the [white paper](http://info.typesafe.com/COLL-20XX-ConductR-WP_LP.html?lst=WS&lsd=COLL-20XX-ConductR-WP&_ga=1.64711343.1443869017.1408561680), its worth your time.
 
-###Distrubuted Applications?
+###Distributed Applications?
 
 Applications that need to be resilient and responsive under load need to scale out. Akka cluster, play/spray/akka-http services are commonly distributed across vms. Ops requirements are different, and obviously more complex with distributed apps.
 
@@ -29,22 +29,20 @@ This is the conductR promise. Lets see how that looks.
 
 ###What's the stuff in ConductR
 
-Start with a collection of vms in the same network. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes. 
+Under the covers, ConductR is, amoung other things, an Akka cluster.
+
+Start with a collection of vms in the same network. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes, or use my Vagrantfile and ansible playbooks: https://github.com/dsugden/conductrR-examples 
 
 ConductR does require on each node:
 1. Debian based system (recommended: Ubuntu 14.04 LTS)
 2. Oracle Java Runtime Environment 8 (JRE 8)
 3. Python 3.4 (supplied with Ubuntu 14.04)
 
-Then you will install Conductr and a proxy (more on why later) and on each of these nodes.
-
-Finally you will install a CLI on one or more, to admin it.
-
 An **Application** in ConductR is a collection of one or more **Bundles**. The developer decides what bundles make up an Application, and then aggregates them with a configuration attribute ("system").
 
 Each Bundle can contain one or more **Components**, typically just one. This represents a process in ConductR's lifecycle management terms.
 
-When you package your Application, a ZIP file will be created for each bundle, containing a manifest.
+When you package your Application, a uniquely named ZIP file will be created for each bundle, containing a manifest.
 
 Here is an example of bundle configuration with **one** Component:
 
@@ -131,7 +129,7 @@ If you don't care about the port:
 
 <script src="https://gist.github.com/dsugden/be4d65813c7e0af3d1e1.js"></script>
 
-And, the very first call in your boot code must be :
+The very first call in your boot code must be :
 
 <script src="https://gist.github.com/dsugden/62ae88dce9af12c0e6b6.js"></script>
 
@@ -156,7 +154,7 @@ Under the covers, this sbt plugin is just using the same REST API you could use 
 
 ###Visualizer
 
-The folks on the CondictR team have done a great job in imagining a useful visual console for your ConductR cluster.
+The folks on the ConductR team have done a great job in imagining a useful visual console for your ConductR cluster.
 
 The console is served by a bundle called **Visualizer** that ships with ConductR. You just have to load it up.
 
@@ -182,9 +180,21 @@ Lets deploy a Spray microservice, and scale to 2 nodes:
 Notice that the application singlemicro is replicated through the whole cluster,
 and started on 2 nodes: 21 and 23
 
+Now lets use the CLI to stop this service (just for kicks)
+
+<script src="https://gist.github.com/dsugden/ff6f2cd8287488d33226.js"></script>
+
+Although I'm addressing node 20, this stop command stops the service in the whole cluster
+
+Lets start this service up again from the CLI, scaling to 2 nodes:
+
+<script src="https://gist.github.com/dsugden/d1e0c082d089950b6bcb.js"></script>
+
 Finally lets deploy a Play app that depends on this microservice, resolving the service with the ConductR api:
 
 <script src="https://gist.github.com/dsugden/9448e50a83ae601a4c93.js"></script>
+
+The above code is enabled by ConductR's use of HAProxy. This is amazing, and a crucial part of the ConductR magic.
 
 To get:
 
