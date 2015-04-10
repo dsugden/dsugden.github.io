@@ -174,9 +174,20 @@ Lets start with an empty cluster. The only app running is the one serving up thi
 ![blank](https://dsugden.github.io/images/conductr/vstart.png)
 
 
-After deploying from the sbt-plugin, and starting on 2 nodes we immediately get:
+Lets deploy a Spray microservice, and scale to 2 nodes:
 
 ![one service](https://dsugden.github.io/images/conductr/vsingle.png)
+
+
+Notice that the application singlemicro is replicated through the whole cluster,
+and started on 2 nodes: 21 and 23
+
+Finally lets deploy a Play app that depends on this microservice, resolving the service with the ConductR api:
+
+<script src="https://gist.github.com/dsugden/9448e50a83ae601a4c93.js"></script>
+
+
+
 
 
 
