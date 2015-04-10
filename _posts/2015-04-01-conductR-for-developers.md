@@ -62,6 +62,8 @@ You'll need the [ConductR SBT plugin](https://github.com/sbt/sbt-typesafe-conduc
 
 To help you out, I've create a repo with 4 different examples of using ConductR: https://github.com/dsugden/conductrR-examples
 
+The repo contains a Vagrantfile to bring up a 4 node ConductR cluster. Read the repo instructions.
+
 This repo is an SBT Project with four subprojects:
  
 1. Single MicroService
@@ -89,7 +91,7 @@ ConductR addresses this with it's **Endpoint** configuration declaration:
 
 <script src="https://gist.github.com/dsugden/c74030b8ff739be10394.js"></script>
 
-When this bundle is run by ConductR, two system env properties are created called **SINGLEMICRO_BIND_IP** and **SINGLEMICRO_BIND_PORT**.
+When this bundle is run by ConductR, two system env properties are created called **SINGLEMICRO\_BIND\_IP** and **SINGLEMICRO\_BIND\_PORT**.
 
 These are available to your app, both in application.conf:
 
@@ -164,10 +166,38 @@ Once this is done, you can build a distribution, load it up to ConductR cluster,
 bundle:dist
 conductr load <space and tab will give you the most recent bundle>
 conductr start <space and tab will give you the most recently loaded bundle>
+conductr stop 
+conductr unload 
 ...
 ```
 
 This is meant for staging probably not something you'll be doing it production, and it beats scp'ing , ssh'ing etc.
+
+Under the covers, this sbt plugin is just using the same REST API you could use from an Ops script.
+
+
+###Visualizer
+
+The folks on the CondictR team have done a great job in imagining a useful visual console for your ConductR cluster.
+
+The console is served by a bundle called **Visualizer** that ships with ConductR. You just have to load it up.
+
+Which brings us to **very useful** ConductR CLI.
+
+This is something I chose to only install on one of my ConductR nodes, as you only need to interact with one node to be interacting with the whole cluster.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
