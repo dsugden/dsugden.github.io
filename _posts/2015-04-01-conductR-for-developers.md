@@ -169,6 +169,10 @@ To see what apps are running in my cluster:
 <script src="https://gist.github.com/dsugden/40d12328e3f5c5288501.js"></script>
 
 
+Lets start with an empty cluster. The only app running is the one serving up this site.
+
+![My helpful screenshot](dsugden.github.io/images/conductr/vstart.png)
+
 
 
 
