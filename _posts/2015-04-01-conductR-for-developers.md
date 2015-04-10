@@ -171,7 +171,9 @@ To see what apps are running in my cluster:
 
 Lets start with an empty cluster. The only app running is the one serving up this site.
 
-![My helpful screenshot](dsugden.github.io/images/conductr/vstart.png)
+![My helpful screenshot](https://dsugden.github.io/images/conductr/vstart.png)
+
+
 
 
 
