@@ -52,30 +52,7 @@ Here is an example of bundle configuration with **one** Component:
 
 This will result in the following **bundle.conf** manifest that will be included in your .zip artifact:
 
-
-```
-version    = "1.0.0"
-name       = "singlemicro"
-system     = "singlemicro-1.0.0"
-nrOfCpus   = 1.0
-memory     = 67108864
-diskSpace  = 5000000
-roles      = []
-components = {
-  "singlemicro-1.0.0" = {
-    description      = "singlemicro"
-    file-system-type = "universal"
-    start-command    = ["singlemicro-1.0.0/bin/singlemicro", "-J-Xms67108864", "-J-Xmx67108864"]
-    endpoints        = {
-      "singlemicro" = {
-        protocol  = "http"
-        bind-port = 8096
-        services  = ["http:/singlemicro"]
-      }
-    }
-  }
-}
-```
+<script src="https://gist.github.com/dsugden/480c6e5371737641bdc6.js"></script>
 
 ConductR is only offered to Typesafe subscribers. So, go get yours.
 
@@ -104,47 +81,27 @@ One of the painful parts of writing clustered apps that can also be run (as they
 
 For example, akka endpoints:
 
-```
-akka.remote {
-    netty.tcp {
-      hostname = "127.0.0.1"
-      port = 8089
-    }
-  }
-```
+<script src="https://gist.github.com/dsugden/c0efa5cf3f2086fd64d7.js"></script>
 
 Now, you are deploying this akka app to the cloud, and either this file must be tokenized, or the boot class take args for some Ops script to supply the actual IPs and ports.
 
 ConductR addresses this with it's **Endpoint** configuration declaration:
 
-```scala
-BundleKeys.endpoints := Map("singlemicro" -> Endpoint("http", 8096, Set(URI("http:/singlemicroservice"))))
-```
+<script src="https://gist.github.com/dsugden/c74030b8ff739be10394.js"></script>
 
 When this bundle is run by ConductR, two system env properties are created called **SINGLEMICRO_BIND_IP** and **SINGLEMICRO_BIND_PORT**.
 
 These are available to your app, both in application.conf:
 
-```
-singlemicro {
-  ip = "127.0.0.1"
-  ip = ${?SINGLEMICRO_BIND_IP}
-  port = 8096
-  port = ${?SINGLEMICRO_BIND_PORT}
-}
-```
+<script src="https://gist.github.com/dsugden/c5700168678f5b2719e0.js"></script>
 
 and programatically:
 
-```scala
-sys.env.get("SINGLEMICRO_BIND_IP")
-```
+<script src="https://gist.github.com/dsugden/92514ff556e9c2435de0.js"></script>
 
 If you need these env properties passed in to your app's main as args, use the **startCommand** attribute
 
-```scala
-BundleKeys.startCommand += "-Dhttp.address=$SINGLEMICRO_BIND_IP -Dhttp.port=$SINGLEMICRO_BIND_PORT"
-```
+<script src="https://gist.github.com/dsugden/50eb241ca7ad85e7cf69.js"></script>
 
 Voila!  Now, determining exactly which IP address is *no longer a developer's configuration problem*. That problem is now handled by OPs or ConductR itself. ConductR will know this information at runtime, and will pass it along.
 
@@ -155,9 +112,7 @@ ConductR handles akka clusters in the following way:
 
 For any bundles that wish to join the same cluster, this aggregation happend with the "system" attribute:
 
-```scala
-BundleKeys.system := "SomeAkkaClusterSystem"
-```
+<script src="https://gist.github.com/dsugden/cd3bd98f2a7cad4d0794.js"></script>
 
 For Bundles sharing the same **system** attribute and intersecting **Endpoints**, ConductR guarantees that only one
 will be starting at any given time.
@@ -165,35 +120,26 @@ will be starting at any given time.
 This removes the need to specify seed nodes in configuration: the *first* bundle that is run designates it's containing node as the defacto seed. All other subsequent nodes that are started will be passed the IP of this first **seed** node.
 
 In order to facilitate this two actions are required by the developer:
-```scala
- BundleKeys.endpoints := Map("akka-remote" -> Endpoint("tcp", 8084, Set.empty))
-```
+
+<script src="https://gist.github.com/dsugden/61e7213c4b6e3925b509.js"></script>
+
 The **akka-remote** attribute must be specified as above.
 
 If you don't care about the port:
 
-```scala
- BundleKeys.endpoints := Map("akka-remote" -> Endpoint("tcp", 0, Set.empty))
-```
+<script src="https://gist.github.com/dsugden/be4d65813c7e0af3d1e1.js"></script>
 
 And, the very first call in your boot code must be :
 
-```scala
-ClusterProperties.initialize
-```
+<script src="https://gist.github.com/dsugden/62ae88dce9af12c0e6b6.js"></script>
 
 This results in: 
 
-```
- akka.cluster.seed-nodes = ["akka.tcp://SomeAkkaClusterSystem@127.0.0.1:8089"]
-```
+<script src="https://gist.github.com/dsugden/b46d2522c965ecd280ac.js"></script>
 
 from your **application.conf** getting rewritten in sys.props to the appropriate cloud IP, eg:
 
-```
- akka.cluster.seed-nodes = ["akka.tcp://SomeAkkaClusterSystem@10.0.1.60:8089"]
-```
-
+<script src="https://gist.github.com/dsugden/c46ed624e72036263c16.js"></script>
 
 ##sbt-typesafe-conductr
 
@@ -209,15 +155,15 @@ $project singlemicro
 Now we need to tell the plugin where ConductR is living:
 
 ```
-conductr:controlServer 192.168.59.103:9005
+conductr controlServer 192.168.59.103:9005
 ```
 
 Once this is done, you can build a distribution, load it up to ConductR cluster, run , stop and unload.
 
 ```
 bundle:dist
-conductr:load < space and tab will give you the most recent bundle>
-conductr:start <bundleId>
+conductr load <space and tab will give you the most recent bundle>
+conductr start <space and tab will give you the most recently loaded bundle>
 ...
 ```
 
