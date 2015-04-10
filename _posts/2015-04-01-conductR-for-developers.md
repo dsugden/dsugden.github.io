@@ -3,31 +3,25 @@ layout: post
 title: Typesafe's ConductR from a developer's seat
 ---
 
-This post will present a first glimpse into developping distributed applications with the Typesafe stack and, in particular, with an eye to managing the deployment, upgrade and life-cycle with [conductR](http://typesafe.com/products/conductr).
+This post will present a first glimpse into developing distributed applications with the Typesafe stack and, in particular, with an eye to managing the deployment, upgrade and life-cycle with [conductR](http://typesafe.com/products/conductr).
 
-Put simply, ConductR is a tool that enables devs and ops roles to manage clustered applications.
+Put simply, ConductR is a tool that enables devs and ops roles to manage distributed applications.
 
 There is more to it than that, and it's cool tech. Go read the [white paper](http://info.typesafe.com/COLL-20XX-ConductR-WP_LP.html?lst=WS&lsd=COLL-20XX-ConductR-WP&_ga=1.64711343.1443869017.1408561680), its worth your time.
 
-####Cluster?
+####Distrubuted Applications?
 
-Applications that need to be resilient and responsive under load need to scale out. Akka cluster, play/spray/akka-http services are commonly distributed across vms. 
+Applications that need to be resilient and responsive under load need to scale out. Akka cluster, play/spray/akka-http services are commonly distributed across vms. Ops requirements are different, and obviously more complex with distributed apps.
 
-####Whats the big deal with managing apps in a cluster?
+Distributed apps need to be deployed and upgraded. They have hardware requirements. They have dependencies and perhaps need to be able to communicate within a cluster. These apps must be configured with network addresses/ports, they must be be able to specifiy hardware level requirements.
 
-Distributed apps need to be deployed and upgraded. They have hardware requirements. They have dependencies and need to be able to communicate within the cluster. These apps must be configured with network addresses/ports.
-
-It is common to develop distributed applications locally, and manage cloud deployment and configuration management later on at great cost. 
-
-When these things go wrong or take too long, it costs. $$$.
-
-####How does conductr help Ops
+Existing tools like ansible, chef, puppet and salt are helpful, Conductr does not replace these, but enables application level management, and supports these tools with a REST api.
 
 ConductR enables the "elastic" part of the Reactive Manifesto. It allows Ops to scale up or down according to load without any service interruption. We will explore how this looks.
 
-####How does conductr help Devs
+####How does ConductR help Devs
 
-As a developer, I want to be able to develop my distributed apps both **locally** and **staged in a cloud**. In an akka cluster, the deploy order matters (seed nodes). Managing the configuration for clustered apps is not trivial. Nor is managing dependencies in apps distributed for scale, ie: load balancing clusters.
+As a developer, I want to be able to develop my distributed apps both **locally** and **staged in a cloud**. For example, in an akka cluster, the deploy order matters (seed nodes). Managing the configuration for clustered apps is not trivial. Nor is managing dependencies in apps distributed for scale, ie: load balancing clusters.
 
 I also want an easy way to resolve the URLs if any dependencies I may have on other processes in the cluster.
 
@@ -35,7 +29,7 @@ This is the conductR promise. Lets see how that looks.
 
 ####What's the stuff in ConductR
 
-Start with a collection of vms that can speak to each other. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes. 
+Start with a collection of vms in the same network. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes. 
 
 ConductR does require on each node:
 * Debian based system (recommended: Ubuntu 14.04 LTS)
@@ -93,6 +87,8 @@ components = {
 }
 ```
 
+ConductR is only offered to Typesafe subscribers. So, go get yours.
+
 So lets take a look at how a developer would get started building Conductr Bundles.
 
 You'll need the [ConductR SBT plugin](https://github.com/sbt/sbt-typesafe-conductr) to get going.
@@ -110,8 +106,7 @@ This repo is an SBT Project with four subprojects:
 4. Play Project with dependency
 ⋅⋅* Simple Play app with a dependency on Single Microservice
 
-I've chosen subprojects to make this blog post easier, but, in the wild, it would also make sense to structure your Bundle as a single SBT project.
-
+I've chosen to use subprojects here, it would also make sense to structure your Bundle as a single SBT project.
 
 ###Configuration
 
@@ -128,9 +123,9 @@ akka.remote {
   }
 ```
 
-Now, you are deploying this akka app to the cloud, and this file must be tokenized for some Ops script to supply the actual IPs and ports.
+Now, you are deploying this akka app to the cloud, and either this file must be tokenized, or the boot class take args for some Ops script to supply the actual IPs and ports.
 
-ConductR address this with it's **Endpoint** configuration declaration:
+ConductR addresses this with it's **Endpoint** configuration declaration:
 
 ```scala
 BundleKeys.endpoints := Map("singlemicro" -> Endpoint("http", 8096, Set(URI("http:/singlemicroservice"))))
