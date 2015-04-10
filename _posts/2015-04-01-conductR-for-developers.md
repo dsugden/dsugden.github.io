@@ -31,7 +31,7 @@ This is the conductR promise. Lets see how that looks.
 
 Under the covers, ConductR is, amoung other things, an Akka cluster.
 
-Start with a collection of vms in the same network. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes, or use my Vagrantfile and ansible playbooks: https://github.com/dsugden/conductrR-examples 
+Start with a collection of vms in the same network. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes, or use my Vagrantfile and ansible playbooks: [conductrR-examples](https://github.com/dsugden/conductrR-examples)
 
 ConductR does require on each node:
 1. Debian based system (recommended: Ubuntu 14.04 LTS)
