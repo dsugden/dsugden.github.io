@@ -186,6 +186,20 @@ Finally lets deploy a Play app that depends on this microservice, resolving the 
 
 <script src="https://gist.github.com/dsugden/9448e50a83ae601a4c93.js"></script>
 
+To get:
+
+![play](https://dsugden.github.io/images/conductr/v1.png)
+
+
+###Conclusion
+
+There is much to be excited about here, as the application configuration part of developing and managing distributed apps can be painful and expensive.
+
+As of the writing of this post, ConductR is currently in beta.
+
+If you are serious about deploying distributed apps, and you love your developers, you want this.
+
+Full disclosure: I'm not trying to sell you a Typesafe Subscription. This is a solid reason to get one.
 
 
 
