@@ -212,7 +212,7 @@ As of the writing of this post, ConductR is currently in beta.
 
 If you are serious about deploying distributed apps, and you love your developers, you want this.
 
-Full disclosure: I'm not trying to sell you a Typesafe Subscription. This is a solid reason to get one.
+Full disclosure: I'm not trying to sell you a Typesafe Subscription. That said, this is a solid reason to get one.
 
 
 
