@@ -32,9 +32,9 @@ This is the conductR promise. Lets see how that looks.
 Start with a collection of vms in the same network. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes. 
 
 ConductR does require on each node:
-* Debian based system (recommended: Ubuntu 14.04 LTS)
-* Oracle Java Runtime Environment 8 (JRE 8)
-* Python 3.4 (supplied with Ubuntu 14.04)
+1. Debian based system (recommended: Ubuntu 14.04 LTS)
+2. Oracle Java Runtime Environment 8 (JRE 8)
+3. Python 3.4 (supplied with Ubuntu 14.04)
 
 Then you will install Conductr and a proxy (more on why later) and on each of these nodes.
 
