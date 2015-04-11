@@ -35,9 +35,8 @@ It is a combination of:
 
 1. Clustered Akka application with special features
   * haproxy for location transparency (your apps can resolve other apps thru ConductR api)
-  * CLI for hands on Ops, very useful in tuning, debugging node roles etc.
+  * CLI and REST API
   * Docker support
-  * REST API for ops
 2. Play application (visual console)
 3. Sbt Plugin
   * local development and deploy
