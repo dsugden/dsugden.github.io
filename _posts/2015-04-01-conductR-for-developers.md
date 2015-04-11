@@ -29,15 +29,28 @@ This is the conductR promise. Lets see how that looks.
 
 ###What's the stuff in ConductR
 
-Under the covers, ConductR is, amoung other things, an Akka cluster.
+"Manage distributed applications" can sound a little hand wavey. What are the actual moving pieces of ConductR?
 
-Start with a collection of vms in the same network. ConductR DOES NOT help with this, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes, or use my Vagrantfile and ansible playbooks: [conductrR-examples](https://github.com/dsugden/conductrR-examples)
+It is a combination of:
+
+1. Clustered Akka application with special features (proxy, CLI, Docker support)
+2. Play application (visual console)
+3. Sbt Plugin
+
+As the end user of ConductR, you are expected to install it in a network, and use the sbt plugin to build your executables.
+
+Thats it.
+
+ConductR does play nice with Dockerfiles, but the examples provided below will stick to straight up typesafe stack jvm based applications.
+
+ConductR DOES NOT help provisioning your initial network, and wasn't intended to. Use ansible/chef/puppet/salt or whatevs to create your network of nodes, or use my Vagrantfile and ansible playbooks: [conductrR-examples](https://github.com/dsugden/conductrR-examples)
 
 ConductR does require on each node:
 
 1. Debian based system (recommended: Ubuntu 14.04 LTS)
 2. Oracle Java Runtime Environment 8 (JRE 8)
 3. Python 3.4 (supplied with Ubuntu 14.04)
+
 
 An **Application** in ConductR is a collection of one or more **Bundles**. The developer decides what bundles make up an Application, and then aggregates them with a configuration attribute ("system").
 
