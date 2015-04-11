@@ -18,7 +18,7 @@ Distributed apps need to be deployed and upgraded. They have hardware requiremen
 Existing OPS tools like ansible, chef, puppet, salt  etc. are essential.
 Conductr does not replace these, but enhances the landscape with sophisticated and _developer friendly_ application level **configuration** and **lifecycle** management. In fact it brings to the table string support for these tools with both a CLI and a REST API.
 
-ConductR enables the "elastic" part of the Reactive Manifesto. It allows Ops to scale up or down according to load without any service interruption. We will explore how this looks.
+ConductR also enables the **elastic** part of the Reactive Manifesto. It allows Ops to scale up or down according to load without any service interruption.
 
 ###How does ConductR help Devs
 
@@ -26,7 +26,6 @@ As a developer, I want to be able to develop my distributed apps both **locally*
 
 I also want an easy way to resolve the URLs if any dependencies I may have on other processes in the cluster.
 
-This is the conductR promise. Lets see how that looks.
 
 ###What's the stuff in ConductR
 
