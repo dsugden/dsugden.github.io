@@ -73,11 +73,11 @@ This will result in the following **bundle.conf** manifest that will be included
 
 <script src="https://gist.github.com/dsugden/480c6e5371737641bdc6.js"></script>
 
-ConductR is only offered to Typesafe subscribers. So, go get yours.
-
 So lets take a look at how a developer would get started building Conductr Bundles.
 
 You'll need the [ConductR SBT plugin](https://github.com/sbt/sbt-typesafe-conductr) to get going.
+
+*The actual ConductR app is only offered to Typesafe subscribers. I know you want to start playing with this NOW. So, go get yours.*
 
 To help you out, I've create a repo with 4 different examples of using ConductR: [conductrR-examples](https://github.com/dsugden/conductrR-examples)
 
