@@ -15,7 +15,8 @@ Applications that need to be resilient and responsive under load need to scale o
 
 Distributed apps need to be deployed and upgraded. They have hardware requirements. They have dependencies and perhaps need to be able to communicate within a cluster. These apps must be configured with network addresses/ports, they must be be able to specifiy hardware level requirements.
 
-Existing tools like ansible, chef, puppet and salt are helpful, Conductr does not replace these, but enables application level management, and supports these tools with a REST api.
+Existing OPS tools like ansible, chef, puppet, salt  etc. are essential.
+Conductr does not replace these, but enhances the landscape with sophisticated and _developer friendly_ application level **configuration** and **lifecycle** management. In fact it brings to the table string support for these tools with both a CLI and a REST API.
 
 ConductR enables the "elastic" part of the Reactive Manifesto. It allows Ops to scale up or down according to load without any service interruption. We will explore how this looks.
 
