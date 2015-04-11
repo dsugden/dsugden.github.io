@@ -29,7 +29,7 @@ I also want an easy way to resolve the URLs if any dependencies I may have on ot
 
 ###What's the stuff in ConductR
 
-"Manage distributed applications" can sound a little hand wavey. What are the actual moving pieces of ConductR?
+_Manage distributed applications_ can sound a little hand wavey. What are the actual moving pieces of ConductR?
 
 It is a combination of:
 
