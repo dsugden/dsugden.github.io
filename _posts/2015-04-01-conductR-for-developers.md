@@ -33,11 +33,19 @@ This is the conductR promise. Lets see how that looks.
 
 It is a combination of:
 
-1. Clustered Akka application with special features (proxy, CLI, Docker support)
+1. Clustered Akka application with special features
+  * haproxy for location transparency (your apps can resolve other apps thru ConductR api)
+  * CLI for hands on Ops, very useful in tuning, debugging node roles etc.
+  * Docker support
+  * REST API for ops
 2. Play application (visual console)
 3. Sbt Plugin
+  * local development and deploy
+  * build envirnoment deploy
 
 As the end user of ConductR, you are expected to install it in a network, and use the sbt plugin to build your executables.
+
+Each node in the ConductR cluster has a list of acceptable roles.  If you have applications that require beefier machines, you can create roles for this purpose. You can specify a role in your app, ConductR will ensure it only deploys to nodes accepting that role.
 
 Thats it.
 
