@@ -200,6 +200,11 @@ Lets deploy a Spray microservice, and scale to 2 nodes:
 ![one service](https://dsugden.github.io/images/conductr/vsingle.png)
 
 
+In this service, we've added the following code to let ConductR know this service is up and ready to receive requests:
+
+<script src="https://gist.github.com/dsugden/05540e152d2382fe8d52.js"></script>
+
+
 Notice that the application singlemicro is replicated through the whole cluster,
 and started on 2 nodes: 21 and 23
 
@@ -223,6 +228,14 @@ To get:
 
 ![play](https://dsugden.github.io/images/conductr/v1.png)
 
+
+###Docker
+
+ConductR also supports Docker, so if your Application needs more than a java8 JVM, this will work. You can still make use of the ability to signal a successful start up to ConductR with the bundle.conf **start-command** attribute.
+
+ConductR provides a **check** command that bundle components may use to poll a tcp endpoint until it becomes available.
+
+I'll put together an example of ConductR with a Dockerfile in a subsequent post.
 
 ###Conclusion
 
