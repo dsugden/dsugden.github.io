@@ -197,6 +197,8 @@ Lets start with an empty cluster. The only app running is the one serving up thi
 
 Lets deploy a Spray microservice, and scale to 2 nodes:
 
+    conduct start <bundleId> 2
+
 ![one service](https://dsugden.github.io/images/conductr/vsingle.png)
 
 
@@ -207,6 +209,14 @@ In this service, we've added the following code to let ConductR know this servic
 
 Notice that the application singlemicro is replicated through the whole cluster,
 and started on 2 nodes: 21 and 23
+
+We can make use of **akka.cluster.roles=[web,frontend,etc]** in the ConductR cluster in conjunction with
+
+    BundleKeys.roles  := Set("frontend")
+    
+to specifiy which nodes we wish to deploy to.
+
+
 
 Now lets use the CLI to stop this service (just for kicks)
 
