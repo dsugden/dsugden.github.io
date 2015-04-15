@@ -164,6 +164,16 @@ from your **application.conf** getting rewritten in sys.props to the appropriate
 
 <script src="https://gist.github.com/dsugden/c46ed624e72036263c16.js"></script>
 
+
+###What about Akka ClusterRoles? 
+
+The Conductr installation process enable the user to specify **akka.cluster.roles=[web, frontend, etc]** for each node.
+
+The Conductr bundle.conf allows the user to specify roles for the bundle:
+
+     BundleKeys.roles  := Set("backend")
+     
+
 ##sbt-conductr
 
 The tool used to build the artifact used by ConductR is the [sbt-conductr](https://github.com/sbt/sbt-conductr) plugin.
@@ -217,7 +227,6 @@ We can make use of **akka.cluster.roles=[web,frontend,etc]** in the ConductR clu
     BundleKeys.roles  := Set("frontend")
     
 to specifiy which nodes we wish to deploy to.
-
 
 
 Now lets use the CLI to stop this service (just for kicks)
