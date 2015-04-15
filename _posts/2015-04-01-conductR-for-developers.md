@@ -65,7 +65,7 @@ Each Bundle can contain one or more **Components**, typically just one. This rep
 
 When you package your Application, a uniquely named ZIP file will be created for each bundle, containing a manifest.
 
-Here is an example of bundle configuration with **one** Component:
+Here is an example of bundle configuration with **one** Component as specified in **build.sbt**:
 
 <script src="https://gist.github.com/dsugden/af50f5bcd7eb0398d657.js"></script>
 
