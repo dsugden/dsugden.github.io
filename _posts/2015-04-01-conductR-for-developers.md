@@ -164,7 +164,9 @@ from your **application.conf** getting rewritten in sys.props to the appropriate
 
 <script src="https://gist.github.com/dsugden/c46ed624e72036263c16.js"></script>
 
-##sbt-typesafe-conductr
+##sbt-conductr
+
+The tool used to build the artifact used by ConductR is the [sbt-conductr](https://github.com/sbt/sbt-conductr) plugin.
 
 IMO, one of the most outstanding features of the plugin is the ability to deploy and manage an app from an sbt console.
 
