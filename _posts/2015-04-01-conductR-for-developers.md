@@ -243,11 +243,20 @@ To get:
 
 ###Docker
 
-ConductR also supports Docker, so if your Application needs more than a java8 JVM, this will work. You can still make use of the ability to signal a successful start up to ConductR with the bundle.conf **start-command** attribute.
+The supported container is Docker
 
-ConductR provides a **check** command that bundle components may use to poll a tcp endpoint until it becomes available.
+Typesafe ConductR abstracts Docker interactions so that:
 
-I'll put together an example of ConductR with a Dockerfile in a subsequent post.
+1. a container image is built using files belonging to a component described by a bundle
+2. the container’s dynamic ports (if any) can be supplied in order to avoid conflicting with any non Docker ports in use
+ 
+
+This abstraction also allows other forms of container to be supported by Typesafe ConductR in the future.
+
+Note also that a bundle’s components do not have to run within a container. They may also run within the same host as the ConductR if required.
+
+_When considering JVM applications we encourage the container-less approach as it can minimise start-up times. Consider Docker for use-cases when you have a native component that profits from the “write once, run anywhere” goal of containers._
+
 
 ###Conclusion
 
