@@ -255,7 +255,7 @@ This abstraction also allows other forms of container to be supported by Typesaf
 
 Note also that a bundle’s components do not have to run within a container. They may also run within the same host as the ConductR if required.
 
-_When considering JVM applications we encourage the container-less approach as it can minimise start-up times. Consider Docker for use-cases when you have a native component that profits from the “write once, run anywhere” goal of containers._
+_When considering JVM applications the ConductR team encourages the container-less approach as it can minimise start-up times. Consider Docker for use-cases when you have a native component that profits from the “write once, run anywhere” goal of containers._
 
 
 ###Conclusion
